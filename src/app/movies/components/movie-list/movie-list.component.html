@@ -1,0 +1,14 @@
+<h1>Movies</h1>
+
+@if (movies$ | async; as movies) {
+  <div>
+    @for (movie of movies; track movie.id) {
+      <div class="movie">
+        <h2>{{ movie.title }}</h2>
+        <div>Release date: {{ movie.releaseDate | date }}</div>
+        <div>Director: {{ movie.director }}</div>
+        <div>Watched? {{ movie.watched }}</div>
+      </div>
+    }
+  </div>
+}

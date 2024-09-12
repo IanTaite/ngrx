@@ -22,8 +22,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// CRUD operations
-
 // Create a movie
 app.post('/movies', (req, res) => {
   const movies = readMoviesFromFile();
@@ -35,8 +33,10 @@ app.post('/movies', (req, res) => {
 
 // Read all movies
 app.get('/movies', (req, res) => {
-  const movies = readMoviesFromFile();
-  res.send(movies);
+  setTimeout(() => {
+    const movies = readMoviesFromFile();
+    res.send(movies);
+  }, 2000);
 });
 
 // Read a single movie
