@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "The Quantum Paradox",
+    "releaseDate": "2025-03-15",
+    "director": "Olivia Nolan",
+    "watched": true
+  },
+  {
+    "id": 2,
+    "title": "Echoes of Tomorrow",
+    "releaseDate": "2024-11-22",
+    "director": "Marcus Chen",
+    "watched": false
+  },
+  {
+    "id": 3,
+    "title": "Whispers in the Void",
+    "releaseDate": "2025-07-04",
+    "director": "Sophia Blackwood",
+    "watched": true
+  },
+  {
+    "id": 4,
+    "title": "Neon Nights: Cyberpunk Chronicles",
+    "releaseDate": "2024-12-01",
+    "director": "Zack Rodriguez",
+    "watched": false
+  },
+  {
+    "id": 5,
+    "title": "The Last Stargazer",
+    "releaseDate": "2025-05-30",
+    "director": "Amelia Frost",
+    "watched": true
+  }
+]
