@@ -3,7 +3,12 @@ import { APPSTATE } from '../../app.state';
 
 const stateSelector = (state: APPSTATE) => state.root;
 
-export const movieSelector = createSelector(
+export const moviesSelector = createSelector(
   stateSelector,
   (state: any) => state.movies
+);
+
+export const draftMovieSelector = createSelector(
+  stateSelector,
+  (state: any) => state.draft
 );

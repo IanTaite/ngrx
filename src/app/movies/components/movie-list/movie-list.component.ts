@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { APPSTATE } from '../../../app.state';
-import { loadMovies } from '../../store/movie.actions';
-import { movieSelector } from '../../store/movie.selectors';
+import { getAllMovies } from '../../store/movie.actions';
+import { moviesSelector } from '../../store/movie.selectors';
 
 @Component({
   selector: 'app-movie-list',
@@ -20,9 +20,9 @@ import { movieSelector } from '../../store/movie.selectors';
 export class MovieListComponent implements OnInit {
   #store = inject(Store<APPSTATE>) as Store<APPSTATE>;
 
-  movies$ = this.#store.select(movieSelector);
+  movies$ = this.#store.select(moviesSelector);
 
   ngOnInit(): void {
-    this.#store.dispatch(loadMovies());
+    this.#store.dispatch(getAllMovies());
   }
 }
