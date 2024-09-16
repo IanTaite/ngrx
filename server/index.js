@@ -24,11 +24,13 @@ app.use(cors());
 
 // Create a movie
 app.post('/movies', (req, res) => {
-  const movies = readMoviesFromFile();
-  const movie = { id: Date.now().toString(), ...req.body };
-  movies.push(movie);
-  writeMoviesToFile(movies);
-  res.status(201).send(movie);
+  setTimeout(() => {
+    const movies = readMoviesFromFile();
+    const movie = { id: movies.reduce((p, c) => { return c.id > p ? c.id : p}, 0) + 1, ...req.body };
+    movies.push(movie);
+    writeMoviesToFile(movies);
+    res.status(201).send(movie);
+  }, 2000);
 });
 
 // Read all movies
@@ -41,30 +43,48 @@ app.get('/movies', (req, res) => {
 
 // Read a single movie
 app.get('/movies/:id', (req, res) => {
-  const movies = readMoviesFromFile();
-  const movie = movies.find((m) => m.id === req.params.id);
-  if (!movie) return res.status(404).send();
-  res.send(movie);
+  setTimeout(() => {
+    const movies = readMoviesFromFile();
+    const movie = movies.find((m) => m.id === Number(req.params.id));
+    if (!movie) return res.status(404).send();
+    res.send(movie);
+  }, 2000);
 });
 
 // Update a movie
+app.put('/movies/:id', (req, res) => {
+  setTimeout(() => {
+    const movies = readMoviesFromFile();
+    const movieIndex = movies.findIndex((m) => m.id === Number(req.params.id));
+    if (movieIndex === -1) return res.status(404).send();
+    movies[movieIndex] = { ...movies[movieIndex], ...req.body };
+    writeMoviesToFile(movies);
+    res.send(movies[movieIndex]);
+  }, 2000);
+});
+
+// Patch a movie
 app.patch('/movies/:id', (req, res) => {
-  const movies = readMoviesFromFile();
-  const movieIndex = movies.findIndex((m) => m.id === req.params.id);
-  if (movieIndex === -1) return res.status(404).send();
-  movies[movieIndex] = { ...movies[movieIndex], ...req.body };
-  writeMoviesToFile(movies);
-  res.send(movies[movieIndex]);
+  setTimeout(() => {
+    const movies = readMoviesFromFile();
+    const movieIndex = movies.findIndex((m) => m.id === Number(req.params.id));
+    if (movieIndex === -1) return res.status(404).send();
+    movies[movieIndex] = { ...movies[movieIndex], ...req.body };
+    writeMoviesToFile(movies);
+    res.send(movies[movieIndex]);
+  }, 2000);
 });
 
 // Delete a movie
 app.delete('/movies/:id', (req, res) => {
-  const movies = readMoviesFromFile();
-  const movieIndex = movies.findIndex((m) => m.id === req.params.id);
-  if (movieIndex === -1) return res.status(404).send();
-  movies.splice(movieIndex, 1);
-  writeMoviesToFile(movies);
-  res.send(req.params.id);
+  setTimeout(() => {
+    const movies = readMoviesFromFile();
+    const movieIndex = movies.findIndex((m) => m.id === Number(req.params.id));
+    if (movieIndex === -1) return res.status(404).send();
+    movies.splice(movieIndex, 1);
+    writeMoviesToFile(movies);
+    res.sendStatus(204);
+  }, 2000);
 });
 
 // Start the server

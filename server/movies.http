@@ -1,0 +1,43 @@
+GET http://localhost:3000/movies HTTP/1.1
+Accept: application/json
+###
+
+
+GET http://localhost:3000/movies/1 HTTP/1.1
+Accept: application/json
+###
+
+POST http://localhost:3000/movies HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Barbie",
+  "releaseDate": "2023-07-21",
+  "director": "Greta Gerwig",
+  "watched": false
+}
+###
+
+PUT http://localhost:3000/movies/3 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": 3,
+  "title": "Whispers in the Void",
+  "releaseDate": "2025-07-04",
+  "director": "Sophia Blackwood",
+  "watched": true
+}
+###
+
+PATCH http://localhost:3000/movies/4 HTTP/1.1
+Content-Type: application/json
+
+{
+  "watched": true
+}
+###
+
+DELETE http://localhost:3000/movies/2 HTTP/1.1
+Accept: application/json
+###
