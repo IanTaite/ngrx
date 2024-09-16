@@ -4,7 +4,9 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideEffects } from '@ngrx/effects';
+
 import { routes } from './app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { reducer as movieReducer } from './movies/store/movie.reducer';
 import * as MovieEffects from './movies/store/movie.effects';
