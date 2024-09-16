@@ -1,5 +1,7 @@
 <h1>Movies</h1>
 
+<button (click)="onCreateButton_click()">Create</button>
+
 @if (movies$ | async; as movies) {
   <div>
     @for (movie of movies; track movie.id) {
@@ -9,6 +11,7 @@
         <div>Director: {{ movie.director }}</div>
         <div>Watched? {{ movie.watched }}</div>
       </div>
+      <button (click)="onUpdateButton_click(movie)">Update</button>
     }
   </div>
 }
