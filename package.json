@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "client": "ng serve --port=12345 --open",
-    "server": "node ./server/index.js",
+    "server": "nodemon ./server/index.js",
     "prettier": "prettier"
   },
   "private": true,
@@ -53,6 +53,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "nodemon": "^3.1.4",
     "typescript": "~5.5.2"
   }
 }
