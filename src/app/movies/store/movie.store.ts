@@ -29,19 +29,19 @@ export class MovieStore extends ComponentStore<IMovieState> {
 
   readonly #onGetMovie = this.updater((state) => ({...state, apiBusy: true }));
   readonly #onGetMovieSuccess = this.updater((state, movie: IMovie) => ({...state, draft: movie }));
-  readonly #onGetMovieFailure = this.updater((state, error: string) => ({...state, apiError: error, apiBusy: false }));
+  readonly #onGetMovieFailure = this.updater((state, {id, err}: {id: number, err: string}) => ({...state, apiError: err, apiBusy: false }));
 
   readonly #onCreateMovie = this.updater((state) => ({...state, apiBusy: true }));
   readonly #onCreateMovieSuccess = this.updater((state, movie: IMovie) => ({...state, apiBusy: false }));
-  readonly #onCreateMovieFailure = this.updater((state, error: string) => ({...state, apiError: error, apiBusy: false }));
+  readonly #onCreateMovieFailure = this.updater((state, {id, err}: {id: number, err: string}) => ({...state, apiError: err, apiBusy: false }));
 
   readonly #onUpdateMovie = this.updater((state) => ({...state, apiBusy: true }));
   readonly #onUpdateMovieSuccess = this.updater((state, movie: IMovie) => ({...state, apiBusy: false }));
-  readonly #onUpdateMovieFailure = this.updater((state, error: string) => ({...state, apiError: error, apiBusy: false }));
+  readonly #onUpdateMovieFailure = this.updater((state, {id, err}: {id: number, err: string}) => ({...state, apiError: err, apiBusy: false }));
 
   readonly #onDeleteMovie = this.updater((state) => ({...state, apiBusy: true }));
   readonly #onDeleteMovieSuccess = this.updater((state, id: number) => ({...state, apiBusy: false }));
-  readonly #onDeleteMovieFailure = this.updater((state, error: string) => ({...state, apiError: error, apiBusy: false }));
+  readonly #onDeleteMovieFailure = this.updater((state, {id, err}: {id: number, err: string}) => ({...state, apiError: err, apiBusy: false }));
 
   getMovies = this.effect<void>(() => {
     return of(undefined).pipe(
@@ -62,7 +62,7 @@ export class MovieStore extends ComponentStore<IMovieState> {
       switchMap((movieId: number) => this.#movieService.getById(movieId).pipe(
         tap({
           next: (movie: IMovie) => this.#onGetMovieSuccess(movie),
-          error: (err: any) => this.#onGetMovieFailure(err),
+          error: (err: any) => this.#onGetMovieFailure({id: movieId, err}),
         })
       )),
       catchError(() => EMPTY)
@@ -75,7 +75,7 @@ export class MovieStore extends ComponentStore<IMovieState> {
       switchMap((movie: IMovie) => this.#movieService.post(movie).pipe(
         tap({
           next: (movie: IMovie) => this.#onCreateMovieSuccess(movie),
-          error: (err: any) => this.#onCreateMovieFailure(err)
+          error: (err: any) => this.#onCreateMovieFailure({id: movie.id, err})
         }),
       )),
       catchError(() => EMPTY)
@@ -88,7 +88,7 @@ export class MovieStore extends ComponentStore<IMovieState> {
       switchMap((movie: IMovie) => this.#movieService.put(movie).pipe(
         tap({
           next: (movie: IMovie) => this.#onUpdateMovieSuccess(movie),
-          error: (err: any) => this.#onUpdateMovieFailure(err)
+          error: (err: any) => this.#onUpdateMovieFailure({id: movie.id, err})
         }),
       )),
       catchError(() => EMPTY)
@@ -101,7 +101,7 @@ export class MovieStore extends ComponentStore<IMovieState> {
       switchMap((id: number) => this.#movieService.delete(id).pipe(
         tap({
           next: () => this.#onDeleteMovieSuccess(id),
-          error: (err: string) => this.#onDeleteMovieFailure(err)
+          error: (err: any) => this.#onDeleteMovieFailure({id, err})
         }),
       )),
       catchError(() => EMPTY)
